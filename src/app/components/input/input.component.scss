@@ -1,0 +1,31 @@
+.input__container{
+  position: relative;
+}
+.label{
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1f1f1f;
+  margin-bottom: 8px;
+}
+.input{
+  position: relative;
+  font-size: 16px;
+  line-height: 1.5;
+  display: block;
+  color: #55595c;
+  width: 100%;
+  padding: 6px 0;
+  border-bottom: 2px solid #d7dde4;
+  &::placeholder{
+    color: #d7dde4;
+  }
+  &:focus{
+    border-bottom: 2px solid #55595c;
+  }
+}
+input[type=password]::-ms-reveal,
+input[type=password]::-ms-clear
+{
+  display: none;
+}

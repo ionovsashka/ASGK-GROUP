@@ -1,0 +1,51 @@
+<div class="login">
+  <div class="login__container">
+    <header class="login__header">
+      <h1 class="login__logo">
+        <img src="../../../assets/img/auth/logo.svg" alt="">
+      </h1>
+    </header>
+    <div class="login__content">
+      <p class="login__title">Войдите для работы</p>
+      <form [formGroup]="loginForm" (ngSubmit)="login()" class="login__form">
+        <div *ngIf="submittingAForm && (loginForm.invalid || error)" class="login__error">
+          <div *ngIf="submittingAForm && (loginForm.get('Login')?.errors?.required || loginForm.get('Password')?.errors?.required)" class="login__validation">
+            Данные поля не могут быть пустыми
+          </div>
+<!--          Данное поле создано для отображения дальнейших ошибок, которые прилетают с бека-->
+          <div *ngIf="submittingAForm && error && !(loginForm.get('Login')?.errors || loginForm.get('Password')?.errors)" class="login__validation">
+            {{error}}
+          </div>
+        </div>
+        <div class="login__controls">
+          <div class="login__control">
+            <app-input
+              [id]="'login'"
+              [text]="'Логин'"
+              [formControlName]="'login'"
+              [placeholder]="'Введите ваш логин'"
+            ></app-input>
+          </div>
+          <div class="login__control">
+            <app-input
+              [id]="'password'"
+              [text]="'Пароль'"
+              [formControlName]="'password'"
+              [placeholder]="'Введите ваш пароль'"
+              [itsPassword]="true"
+              [showPassword]="showPassword"
+            >
+              <button type="button" (click)="showPassword = !showPassword" class="login__show-password">
+                <img *ngIf="!showPassword; else showpas" src="../../../assets/img/auth/view-password.svg" alt="">
+                <ng-template #showpas>
+                  <img src="../../../assets/img/auth/hide-password.svg" alt="">
+                </ng-template>
+              </button>
+            </app-input>
+          </div>
+        </div>
+        <button class="login__submit-btn" type="submit">Войти</button>
+      </form>
+    </div>
+  </div>
+</div>
