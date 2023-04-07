@@ -1,16 +1,24 @@
 .login{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 450px;
+  max-width: 450px;
   &__container{
+    width: 100%;
+    max-width: 100%;
     background-color: white;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.17);
     border-radius: .5rem;
-    width: 450px;
-    max-width: 100%;
   }
   &__header{
     border-bottom: 1px solid #4f5f6f;
     height: 115px;
     position: relative;
     display: flex;
+    width: 100%;
+    max-width: 100%;
   }
   &__logo{
     text-align: center;
@@ -97,5 +105,9 @@
       background: linear-gradient(122.73deg,#ecff75 3.11%,#c1de00 68.37%);
       transition: background .3s ease;
     }
+  }
+
+  @media (max-width: 500px) {
+    width: 95%
   }
 }

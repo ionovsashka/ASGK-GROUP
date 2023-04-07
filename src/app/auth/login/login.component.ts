@@ -46,8 +46,6 @@ export class LoginComponent implements OnInit {
           this.authService.getToken(token).subscribe({
             next: (response) => {
               this.store.dispatch(setToken({token: response.token}))
-              // localStorage.setItem('token', String(response.token))
-              // localStorage.setItem('identifier', String(response.identifier))
               return this.router.navigate(['/'])
             }
           })

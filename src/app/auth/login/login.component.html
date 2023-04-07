@@ -9,7 +9,7 @@
       <p class="login__title">Войдите для работы</p>
       <form [formGroup]="loginForm" (ngSubmit)="login()" class="login__form">
         <div *ngIf="submittingAForm && (loginForm.invalid || error)" class="login__error">
-          <div *ngIf="submittingAForm && (loginForm.get('Login')?.errors?.required || loginForm.get('Password')?.errors?.required)" class="login__validation">
+          <div *ngIf="submittingAForm && (loginForm.get('login')?.errors?.required || loginForm.get('password')?.errors?.required)" class="login__validation">
             Данные поля не могут быть пустыми
           </div>
 <!--          Данное поле создано для отображения дальнейших ошибок, которые прилетают с бека-->

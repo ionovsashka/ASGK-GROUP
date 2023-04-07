@@ -2,6 +2,8 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SendNotificationsService} from "../../../../shared/services/main/send-notifications.service";
 import {AlertService} from "../../../../components/alert/alert.service";
+import {Store} from "@ngrx/store";
+import {tokenSelector} from "../../../../reducers/token";
 
 @Component({
   selector: 'app-push-modal',
@@ -13,9 +15,12 @@ export class PushModalComponent  {
   pushForm!: FormGroup
   submittinAForm!: boolean
   user_ids: Array<string> = []
+  token: string = ''
 
-  constructor(private sendNotifications: SendNotificationsService, private alertService: AlertService) {
+  constructor(private sendNotifications: SendNotificationsService, private alertService: AlertService, private store: Store) {
   }
+
+  token$ = this.store.select(tokenSelector)
 
   ngOnInit(): void {
     this.submittinAForm = false
@@ -24,13 +29,15 @@ export class PushModalComponent  {
       push_message: new FormControl('', Validators.required),
       date_start: new FormControl('')
     })
+    this.token$.subscribe((response) => {
+      this.token = response
+    })
   }
 
   submitPushMessage(){
     this.submittinAForm = true
-    const token = <string>localStorage.getItem('token')
     if(!this.pushForm.invalid){
-      this.sendNotifications.sendPush(token, this.pushForm.value).subscribe({
+      this.sendNotifications.sendPush(this.token, this.pushForm.value).subscribe({
         next: () => {
           this.alertService.success('Уведомление успешно отправлено')
           this.onClose.emit()

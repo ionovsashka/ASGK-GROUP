@@ -4,8 +4,8 @@
       <div class="modal-push__message">
         <label>Текст уведомления</label>
         <textarea formControlName="push_message"></textarea>
-        <div *ngIf="pushForm.get('Message')?.errors && submittinAForm" class="modal-push__validation">
-          <small *ngIf="pushForm.get('Message')?.errors?.required">Данное поле обязательно для заполнения</small>
+        <div *ngIf="pushForm.get('push_message')?.errors && submittinAForm" class="modal-push__validation">
+          <small *ngIf="pushForm.get('push_message')?.errors?.required">Данное поле обязательно для заполнения</small>
         </div>
       </div>
       <div class="modal-push__date-start">
