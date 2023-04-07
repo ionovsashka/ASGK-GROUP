@@ -1,0 +1,48 @@
+
+<ng-template appFilterWindow></ng-template>
+<div class="search-window">
+  <div class="search-window__inputs">
+    <div class="search-window__field">
+      <div class="search-window__label">Показывать (max=1000)</div>
+      <input [(ngModel)]="params.limit" class="search-window__input" placeholder="Показывать (max=1000)" type="number" min="0">
+    </div>
+    <div class="search-window__field">
+      <div class="search-window__label">Отступ</div>
+      <input [(ngModel)]="params.offset"  class="search-window__input" placeholder="Отступ" type="number" min="0">
+    </div>
+    <div *ngFor="let field of fields" class="search-window__field">
+      <div class="search-window__label">{{field.placeholder}}</div>
+      <input *ngIf="field.id !== 'gender'; else gender" [(ngModel)]="field.value" class="search-window__input" type="text">
+      <ng-template #gender>
+        <div class="search-window__gender">
+          <label>
+            <input [(ngModel)]="field.value" [value]="'м'" class="radio" name="Gender" type="radio">
+            <span class="fake__radio"></span>
+            <span class="text">Муж</span>
+          </label>
+          <label>
+            <input [(ngModel)]="field.value" [value]="'ж'" class="radio" name="Gender" type="radio">
+            <span class="fake__radio"></span>
+            <span class="text">Жен</span>
+          </label>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+  <div class="search-window__add-field">
+    <button (click)="viewFilter()" type="button">Добавить поле</button>
+  </div>
+  <div class="search-window__footer footer">
+    <div class="footer__buttons-for-param">
+      <div class="footer__confirm">
+        <button (click)="submit()" type="button">Применить</button>
+      </div>
+      <div class="footer__cancel">
+        <button (click)="resetFields()" type="button">Сброс</button>
+      </div>
+    </div>
+    <div class="footer__button-logout">
+      <button (click)="logout()" type="button">Выйти</button>
+    </div>
+  </div>
+</div>

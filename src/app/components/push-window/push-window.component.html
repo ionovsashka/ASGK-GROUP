@@ -1,0 +1,29 @@
+<div (click)="clickOverlay($event)" class="overlay">
+  <form [formGroup]="pushForm" (ngSubmit)="submitPushMessage()" class="modal-push">
+    <div class="modal-push__inputs">
+      <div class="modal-push__message">
+        <label>Текст уведомления</label>
+        <textarea formControlName="push_message"></textarea>
+        <div *ngIf="pushForm.get('Message')?.errors && submittinAForm" class="modal-push__validation">
+          <small *ngIf="pushForm.get('Message')?.errors?.required">Данное поле обязательно для заполнения</small>
+        </div>
+      </div>
+      <div class="modal-push__date-start">
+        <label>Дата начала действия</label>
+        <input formControlName="date_start"
+               type="datetime-local"
+        >
+      </div>
+    </div>
+    <div class="modal-push__footer">
+      <div class="modal-push__buttons">
+        <div class="modal-push__button">
+          <button (click)="cancel()" type="button">Отмена</button>
+        </div>
+        <div class="modal-push__button">
+          <button type="submit">Оправить</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

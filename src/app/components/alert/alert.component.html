@@ -1,0 +1,11 @@
+<div *ngIf="text" class="alert">
+  <div
+    class="alert__content"
+    [ngClass]="{
+      'success': type === 'success',
+      'error': type === 'error'
+    }"
+  >
+    {{text}}
+  </div>
+</div>

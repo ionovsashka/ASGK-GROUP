@@ -1,0 +1,57 @@
+@import "../../shared/mixins.scss";
+.table{
+  width: 100%;
+}
+
+.header-table{
+  border-bottom: 2px solid #fdf4e8;
+  &__column{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+    position: relative;
+    padding: 8px 8px;
+    color: #fdf4e8;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 18px;
+    border-right: 2px solid #fdf4e8;
+    border-left: 2px solid #fdf4e8;
+    &:first-child{
+      border-right: 2px solid #fdf4e8;
+    }
+    &:last-child{
+      border-left: 2px solid #fdf4e8;
+    }
+  }
+}
+
+.user{
+  border-bottom: 2px solid #fdf4e8;
+  &__column{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+    position: relative;
+    padding: 8px 8px;
+    color: #fdf4e8;
+    font-size: 16px;
+    line-height: 18px;
+    border-right: 2px solid #fdf4e8;
+    border-left: 2px solid #fdf4e8;
+    &:first-child{
+      border-right: 2px solid #fdf4e8;
+    }
+    &:last-child{
+      border-left: 2px solid #fdf4e8;
+    }
+  }
+}
+
+@include checkbox;
+.custom-checkbox{
+  width: 18px;
+  height: 18px;
+}

@@ -1,0 +1,119 @@
+@import "../../../../shared/mixins.scss";
+@include radio;
+@include textDefault;
+input[type="number"] {
+  -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  display: none;
+}
+
+.search-window {
+  position: fixed;
+  top: 85px;
+  right: 60px;
+  z-index: 100;
+  width: 300px;
+  max-width: 100%;
+  padding: 20px;
+  border-radius: 10px;
+  border: 2px solid #fdf4e8;
+  background-color: #1f1f1f;
+
+  &__field{
+    margin-bottom: 5px;
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+
+  &__label{
+    font-size: 14px;
+    line-height: 16px;
+    color: #fdf4e8;
+    margin-bottom: 5px;
+  }
+
+  &__gender{
+    & > label{
+      margin-right: 10px;
+      &:last-child{
+        margin-right: 0;
+      }
+    }
+  }
+
+  &__inputs {
+    max-height: 111px;
+    overflow-y: auto;
+    margin-bottom: 10px;
+  }
+
+  &__input {
+    @include input-admin;
+    width: 100%;
+    margin-bottom: 5px;
+    &:last-child{
+      margin-bottom: 0;
+    }
+  }
+
+  &__add-field {
+    display: inline-block;
+    margin-bottom: 20px;
+    & > button{
+      background-color: transparent;
+      color: #fdf4e8;
+      height: auto;
+      width: auto;
+    }
+  }
+
+  &__footer {
+  }
+  @media (max-width: 400px) {
+    width: 250px;
+    right: 20px;
+  }
+}
+.footer {
+  &__buttons-for-param{
+    display: flex;
+    margin-bottom: 5px;
+  }
+  &__confirm {
+    flex: 0 1 100%;
+    margin-right: 10px;
+    & > button{
+      width: 100%;
+      @include button-green;
+    }
+
+    @media (max-width: 400px) {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  }
+
+  &__cancel {
+    flex: 0 1 100%;
+    & > button{
+      width: 100%;
+      @include button-green;
+    }
+  }
+  &__button-logout{
+    & > button{
+      width: 100%;
+      @include button-green;
+    }
+  }
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,10 @@
+<div class="footer-table">
+  <div class="footer-table__choose-user">
+    <span class="text" *ngIf="stateForOne">Выбран <span>{{usersCheckedIds.length}}</span> клиент</span>
+    <span class="text" *ngIf="stateForA">Выбрано <span>{{usersCheckedIds.length}}</span> клиента</span>
+    <span class="text" *ngIf="stateForOv">Выбрано <span>{{usersCheckedIds.length}}</span> клиентов</span>
+  </div>
+  <div class="footer-table__button">
+    <button (click)="openModal()" type="button">Отправить PUSH</button>
+  </div>
+</div>

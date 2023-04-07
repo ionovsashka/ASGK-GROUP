@@ -1,0 +1,100 @@
+@mixin button-green{
+  padding: 10px;
+  border-radius: 0.5833333333333334em;
+  background-image: linear-gradient(150deg, #ecff75, #c1de00);
+  transition: background-color 200ms ease;
+  color: #0d0d0d;
+  font-size: 1.2em;
+  line-height: 120%;
+  font-weight: 700;
+  &:hover{
+    background-image: linear-gradient(180deg, #c1de00, #c1de00);
+  }
+  &:active{
+    background-image: linear-gradient(180deg, #b1cc00, #b1cc00);
+  }
+}
+
+@mixin input-admin{
+  padding: 5px;
+  background-color: transparent;
+  border: 2px solid #fdf4e8;
+  border-radius: 5px;
+  font-size: 16px;
+  line-height: 18px;
+  color: #fdf4e8;
+}
+
+@mixin checkbox{
+  .real-checkbox{
+    display: none;
+    &:checked + .custom-checkbox{
+      background: #c1de00;
+      border: 1px solid #c1de00;
+    }
+    &:checked + .custom-checkbox:before{
+      display: inline-block;
+    }
+  }
+
+  .custom-checkbox{
+    position: relative;
+    display: inline-block;
+    background: #FFFFFF;
+    border: 1px solid #808080;
+    border-radius: 2px;
+    &:before{
+      content: '';
+      display: none;
+      width: 12px;
+      height: 9px;
+      background-image: url("../../assets/img/home/check.svg");
+      background-size: contain;
+      background-repeat: no-repeat;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+
+@mixin radio{
+  .radio{
+    display: none;
+    &:checked + .fake__radio::before{
+      display: inline-block;
+    }
+  }
+  .fake__radio{
+    position: relative;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 1px solid #C7C7C7;
+    border-radius: 100%;
+    margin-right: 3px;
+    margin-bottom: 3px;
+    vertical-align:middle;
+    &::before{
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: none;
+      width: 12px;
+      height: 12px;
+      background: #c1de00;
+      border-radius: 100%;
+    }
+  }
+}
+
+@mixin textDefault{
+  .text{
+    font-size: 16px;
+    line-height: 18px;
+    color: #fdf4e8;
+  }
+}

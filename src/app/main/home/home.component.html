@@ -1,17 +1,70 @@
-<!--<button (click)="logout()">Выйти</button>-->
+<ng-template appModalWindow></ng-template>
 <div class="home">
-  <div class="home__header"></div>
+  <div class="home__header header">
+    <app-header-table
+      [params]="params"
+      (onSearch)="search($event)"
+    ></app-header-table>
+  </div>
   <div class="home__container">
     <div class="home__table-container">
-      <table class="home__table table">
-        <tr class="table__header header-table">
-          <th class="header-table__column">Имя пользователя</th>
-          <th class="header-table__column">ФИО</th>
-          <th class="header-table__column">Пол</th>
-          <th class="header-table__column">Электронная почта</th>
-          <th class="header-table__column">Дата регистрации</th>
-        </tr>
-      </table>
+          <app-table
+            [users]="users"
+            (onUpdateUsers)="updateUsers($event)"
+            (onUpdateUsersCheckedIds)="updateUsersChecked($event)"
+          >
+          </app-table>
+<!--      <table class="home__table table">-->
+<!--        <tr class="table__header header-table">-->
+<!--          <th class="header-table__column">-->
+<!--            <label>-->
+<!--              <input (change)="checkUncheckAll()" [(ngModel)]="masterSelected" class="real-checkbox"-->
+<!--                     type="checkbox">-->
+<!--              <span class="custom-checkbox"></span>-->
+<!--            </label>-->
+<!--          </th>-->
+<!--          <th class="header-table__column">ID клиента</th>-->
+<!--          <th class="header-table__column">Фамилия</th>-->
+<!--          <th class="header-table__column">Имя</th>-->
+<!--          <th class="header-table__column">Отчество</th>-->
+<!--          <th class="header-table__column">Пол</th>-->
+<!--          <th class="header-table__column">Электронная почта</th>-->
+<!--          <th class="header-table__column">Дата рождения</th>-->
+<!--          <th class="header-table__column">ID карты</th>-->
+<!--          <th class="header-table__column">Штрих-код</th>-->
+<!--          <th class="header-table__column">Бонусы</th>-->
+<!--          <th class="header-table__column">Уровень лояльности</th>-->
+<!--          <th class="header-table__column">Дата создания карты</th>-->
+<!--        </tr>-->
+<!--        <tr *ngFor="let user of users" class="table__user user">-->
+<!--          <td class="user__column">-->
+<!--            <label>-->
+<!--              <input (change)="isAllSelected()" [(ngModel)]="user.isSelected" class="real-checkbox" type="checkbox">-->
+<!--              <span class="custom-checkbox"></span>-->
+<!--            </label>-->
+<!--          </td>-->
+<!--          <td class="user__column">{{user.user_id}}</td>-->
+<!--          <td class="user__column">{{user.last_name}}</td>-->
+<!--          <td class="user__column">{{user.first_name}}</td>-->
+<!--          <td class="user__column">{{user.pat_name}}</td>-->
+<!--          <td class="user__column">{{user.gender}}</td>-->
+<!--          <td class="user__column">{{user.email}}</td>-->
+<!--          <td class="user__column">{{user.birthday}}</td>-->
+<!--          <td class="user__column">{{user.link}}</td>-->
+<!--          <td class="user__column">{{user.barcode}}</td>-->
+<!--          <td class="user__column">{{user.bonus}}</td>-->
+<!--          <td class="user__column">{{user.loyalty_level}}</td>-->
+<!--          <td class="user__column">{{user.created_at | date: 'dd:MM:YYYY'}}</td>-->
+<!--        </tr>-->
+<!--      </table>-->
     </div>
+  </div>
+  <div class="home__footer">
+    <app-footer-table
+      (onViewPushModal)="viewPushModal()"
+      [usersCheckedIds]="usersCheckedIds"
+    >
+
+    </app-footer-table>
   </div>
 </div>

@@ -1,0 +1,25 @@
+.alert{
+  position: fixed;
+  z-index: 10000000;
+  top: 50px;
+  right: 40px;
+  max-width: 250px;
+  &__content{
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 16px;
+    color: #1f1f1f;
+  }
+}
+
+.success{
+  background-color: #b1cc00;
+}
+
+.error{
+  background-color: #ff7c52;
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../shared/services/auth/auth.service";
 import {Subject, takeUntil} from "rxjs";
 import {Router} from "@angular/router";
@@ -39,8 +39,19 @@ export class LoginComponent implements OnInit {
     )
       .subscribe({
       next: (response:any) => {
-        localStorage.setItem('token', response.auth_token)
-        return this.router.navigate([''])
+        console.log(response)
+        if(response.auth_token){
+          const token = response.auth_token as string
+          this.authService.getToken(token).subscribe({
+            next: (response) => {
+              console.log(response)
+              localStorage.setItem('token', String(response.token))
+              localStorage.setItem('identifier', String(response.identifier))
+              return this.router.navigate(['/'])
+            }
+          })
+        }
+        return
       },
       error: (error) => {
         this.error = error.error
