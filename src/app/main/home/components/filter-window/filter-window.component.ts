@@ -1,16 +1,5 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-
-export interface ActiveField{
-  id: string,
-  value: string,
-  placeholder: string
-}
-
-export interface Field{
-  id: string,
-  placeholder: string,
-  checked: boolean
-}
+import {ActiveField, Field} from "../../../../shared/interfaces/main/home/home.interfaces";
 
 @Component({
   selector: 'app-filter-window',

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {PushNotification} from "../../../components/push-window/push-window.component";
+import {PushNotification} from "../../interfaces/main/home/home.interfaces";
 
 @Injectable({
   providedIn: 'root'

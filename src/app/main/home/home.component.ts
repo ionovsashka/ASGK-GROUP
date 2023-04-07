@@ -1,20 +1,11 @@
-import {Component, ComponentFactoryResolver, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, ComponentFactoryResolver, OnInit, ViewChild} from '@angular/core';
 import {UsersService} from "../../shared/services/main/users.service";
-import {Router} from "@angular/router";
 import {ModalWindowDirective} from "../../shared/directives/modal-window.directive";
-import {PushWindowComponent} from "../../components/push-window/push-window.component";
 import {AlertService} from "../../components/alert/alert.service";
-
-export interface UserResponse {
-  meta: Object,
-  passes: Array<any>
-}
-
-export interface ParamsRequest {
-  limit: number
-  offset: number
-  search: string
-}
+import {PushModalComponent} from "./components/push-modal/push-modal.component";
+import {ParamsRequest, UserResponse} from "../../shared/interfaces/main/home/home.interfaces";
+import {Store} from "@ngrx/store";
+import {tokenSelector} from "../../reducers/token";
 
 @Component({
   selector: 'app-home',
@@ -26,18 +17,19 @@ export class HomeComponent implements OnInit {
   @ViewChild(ModalWindowDirective) modalDir!: ModalWindowDirective
 
   token!: string
-  identifier!: string
   users!: Array<any>
   usersCheckedIds!: Array<string> // Массив, в который будут заноситься логины выбраных пользователей
   masterSelected!: boolean // Переменная, которая отвечает за выбор всех пользователей на странице
   params!: ParamsRequest
 
-  constructor(private usersService: UsersService, private resolver: ComponentFactoryResolver, private alertService: AlertService) { }
+  constructor(private usersService: UsersService, private resolver: ComponentFactoryResolver, private alertService: AlertService, private store: Store) { }
+
+  token$ = this.store.select(tokenSelector)
 
   ngOnInit(): void {
     if(localStorage.getItem('params')){
       this.params = JSON.parse(localStorage.getItem('params') as string)
-      // localStorage.removeItem('params')
+      localStorage.removeItem('params')
     } else{
       this.params = {
         search: '',
@@ -45,17 +37,18 @@ export class HomeComponent implements OnInit {
         offset: 0
       }
     }
-    this.token = <string>localStorage.getItem('token')
-    this.identifier = <string>localStorage.getItem('identifier')
+    this.token$.subscribe((response) => {
+      this.token = response
+    })
     this.users = []
     this.masterSelected = false
     this.usersCheckedIds= []
-    this.getUsers(this.token, this.identifier, this.params)
+    this.getUsers(this.token, this.params)
   }
 
-  getUsers(token: string, identifier: string, params: ParamsRequest){
+  getUsers(token: string, params: ParamsRequest){
     this.users = []
-    this.usersService.getUsers(token, identifier, params).subscribe({
+    this.usersService.getUsers(token, params).subscribe({
       next: (response:UserResponse) => {
         if(response.passes.length !== 0){
           for(let user of response.passes){
@@ -78,8 +71,7 @@ export class HomeComponent implements OnInit {
 
   search(params: ParamsRequest) {
     this.params = params
-    console.log(this.params)
-    this.getUsers(this.token, this.identifier, params)
+    this.getUsers(this.token, params)
   }
 
   viewPushModal() {
@@ -87,7 +79,7 @@ export class HomeComponent implements OnInit {
       this.alertService.error('Для отправки уведомлений, выберите хотя бы одного клиента')
       return
     }
-    const pushModalFactory = this.resolver.resolveComponentFactory(PushWindowComponent)
+    const pushModalFactory = this.resolver.resolveComponentFactory(PushModalComponent)
     const pushModalComponent = this.modalDir.modalWindowContainer.createComponent(pushModalFactory)
     pushModalComponent.instance.user_ids = this.usersCheckedIds
     pushModalComponent.instance.onClose.subscribe(() => {

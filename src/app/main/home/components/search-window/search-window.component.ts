@@ -1,8 +1,10 @@
 import {Component, ComponentFactoryResolver, EventEmitter, HostListener, Output, ViewChild} from '@angular/core';
 import {FilterWindowDirective} from "../../../../shared/directives/filter-window.directive";
-import {ParamsRequest} from "../../home.component";
-import {ActiveField, FilterWindowComponent} from "../../../filter-window/filter-window.component";
 import {Router} from "@angular/router";
+import {FilterWindowComponent} from "../filter-window/filter-window.component";
+import {ActiveField, ParamsRequest} from "../../../../shared/interfaces/main/home/home.interfaces";
+import {Store} from "@ngrx/store";
+import {clearToken} from "../../../../reducers/token";
 
 @Component({
   selector: 'app-search-window',
@@ -27,7 +29,7 @@ export class SearchWindowComponent {
   params!: ParamsRequest
   fields!: Array<ActiveField>
 
-  constructor(private resolver: ComponentFactoryResolver, private router: Router) {
+  constructor(private resolver: ComponentFactoryResolver, private router: Router, private store: Store) {
   }
 
   ngOnInit(): void {
@@ -97,6 +99,7 @@ export class SearchWindowComponent {
 
   logout() {
     localStorage.clear()
+    this.store.dispatch(clearToken())
     return this.router.navigate(['auth/login'])
   }
 }

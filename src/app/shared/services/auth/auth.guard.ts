@@ -7,7 +7,7 @@ import {
   RouterStateSnapshot,
   UrlTree
 } from '@angular/router';
-import { Observable } from 'rxjs';
+import {first, map, Observable} from 'rxjs';
 import {AuthService} from "./auth.service";
 
 @Injectable({
@@ -20,17 +20,24 @@ export class AuthGuard implements CanActivate, CanActivateChild {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if(!!localStorage.getItem('token')){
-      return true
-    } else{
-      this.router.navigate(['auth/login'])
-      return false
-    }
+    return this.getIsAuth()
   }
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.canActivate(childRoute, state)
+  }
+
+  private getIsAuth(): Observable<boolean>{
+    return this.authService.isAuth$.pipe(
+      first(),
+      map(isAuth => {
+        if(!isAuth){
+          this.router.navigate(['auth/login'])
+        }
+        return isAuth
+      })
+    )
   }
 
 }

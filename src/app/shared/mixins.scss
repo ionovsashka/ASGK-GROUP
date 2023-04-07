@@ -98,3 +98,9 @@
     color: #fdf4e8;
   }
 }
+
+@mixin textLarge{
+  font-size: 28px;
+  line-height: 30px;
+  color: #fdf4e8;
+}

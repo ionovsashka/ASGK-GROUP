@@ -35,8 +35,8 @@ export class PushModalComponent  {
           this.alertService.success('Уведомление успешно отправлено')
           this.onClose.emit()
         },
-        error: () => {
-          this.alertService.success('Ошибка связи с сервером')
+        error: (error: any) => {
+          this.alertService.error(error.error)
         }
       })
       this.submittinAForm = false

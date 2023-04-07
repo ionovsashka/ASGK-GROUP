@@ -1,7 +1,7 @@
 import {Component, ComponentFactoryResolver, EventEmitter, HostListener, Input, Output, ViewChild} from '@angular/core';
-import {ParamsRequest} from "../../home.component";
 import {SearchWindowDirective} from "../../../../shared/directives/search-window.directive";
-import {SearchWindowComponent} from "../../../search-window/search-window.component";
+import {SearchWindowComponent} from "../search-window/search-window.component";
+import {ParamsRequest} from "../../../../shared/interfaces/main/home/home.interfaces";
 
 @Component({
   selector: 'app-home-header',

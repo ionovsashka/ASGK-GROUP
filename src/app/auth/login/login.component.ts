@@ -3,6 +3,8 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../shared/services/auth/auth.service";
 import {Subject, takeUntil} from "rxjs";
 import {Router} from "@angular/router";
+import {Store} from "@ngrx/store";
+import {setToken} from "../../reducers/token";
 
 @Component({
   selector: 'app-login',
@@ -18,7 +20,7 @@ export class LoginComponent implements OnInit {
   error!: Error
   destroy$ = new Subject()
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private store: Store) { }
 
   ngOnInit(): void {
     this.submittingAForm = false
@@ -39,14 +41,13 @@ export class LoginComponent implements OnInit {
     )
       .subscribe({
       next: (response:any) => {
-        console.log(response)
         if(response.auth_token){
           const token = response.auth_token as string
           this.authService.getToken(token).subscribe({
             next: (response) => {
-              console.log(response)
-              localStorage.setItem('token', String(response.token))
-              localStorage.setItem('identifier', String(response.identifier))
+              this.store.dispatch(setToken({token: response.token}))
+              // localStorage.setItem('token', String(response.token))
+              // localStorage.setItem('identifier', String(response.identifier))
               return this.router.navigate(['/'])
             }
           })

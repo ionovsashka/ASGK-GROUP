@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {ParamsRequest, UserResponse} from "../../../main/home/home.component";
+import {ParamsRequest, UserResponse} from "../../interfaces/main/home/home.interfaces";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
-  getUsers(token: string, identifier: string, params: ParamsRequest){
+  getUsers(token: string, params: ParamsRequest){
     return this.http.get<UserResponse>(`${this.host}/${token}/passes`, {
       headers:{
         'Content-Type': 'application/json',
