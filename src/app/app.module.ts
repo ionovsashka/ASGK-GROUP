@@ -22,8 +22,7 @@ const LOADER_INTERCEPTOR: Provider = {
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ErrorComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,

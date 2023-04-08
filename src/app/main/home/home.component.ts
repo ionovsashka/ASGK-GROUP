@@ -48,6 +48,7 @@ export class HomeComponent implements OnInit {
 
   getUsers(token: string, params: ParamsRequest){
     this.users = []
+    this.usersCheckedIds = []
     this.usersService.getUsers(token, params).subscribe({
       next: (response:UserResponse) => {
         if(response.passes.length !== 0){
@@ -60,7 +61,6 @@ export class HomeComponent implements OnInit {
               this.users.push(user)
             }
           }
-          console.log(this.users)
         }
 
       },

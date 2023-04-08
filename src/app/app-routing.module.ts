@@ -6,7 +6,7 @@ import {AuthGuard} from "./shared/services/auth/auth.guard";
 const routes: Routes = [
   {path: '', canActivate:[AuthGuard], loadChildren: () => import('./main/main.module').then(m => m.MainModule)},
   {path: 'auth', loadChildren: () => import('./auth/auth.module').then(m => m.AuthModule)},
-  {path: 'error', component: ErrorComponent},
+  {path: 'error', loadChildren: () => import('./error/error.module').then(m => m.ErrorModule)},
   {path: '**' , redirectTo: 'error'}
 ];
 
