@@ -1,4 +1,4 @@
-import {Component, ComponentFactoryResolver, OnInit, ViewChild} from '@angular/core';
+import {Component, ComponentFactoryResolver, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {UsersService} from "../../shared/services/main/users.service";
 import {ModalWindowDirective} from "../../shared/directives/modal-window.directive";
 import {AlertService} from "../../components/alert/alert.service";
@@ -6,13 +6,19 @@ import {PushModalComponent} from "./components/push-modal/push-modal.component";
 import {ParamsRequest, UserResponse} from "../../shared/interfaces/main/home/home.interfaces";
 import {Store} from "@ngrx/store";
 import {tokenSelector} from "../../reducers/token";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+
+  @HostListener('window:beforeunload')
+  setParamsLocalStorage(){
+    localStorage.setItem('params', JSON.stringify(this.params))
+  }
 
   @ViewChild(ModalWindowDirective) modalDir!: ModalWindowDirective
 
@@ -25,6 +31,7 @@ export class HomeComponent implements OnInit {
   constructor(private usersService: UsersService, private resolver: ComponentFactoryResolver, private alertService: AlertService, private store: Store) { }
 
   token$ = this.store.select(tokenSelector)
+  destroy$ = new Subject()
 
   ngOnInit(): void {
     if(localStorage.getItem('params')){
@@ -49,7 +56,9 @@ export class HomeComponent implements OnInit {
   getUsers(token: string, params: ParamsRequest){
     this.users = []
     this.usersCheckedIds = []
-    this.usersService.getUsers(token, params).subscribe({
+    this.usersService.getUsers(token, params).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe({
       next: (response:UserResponse) => {
         if(response.passes.length !== 0){
           for(let user of response.passes){
@@ -93,5 +102,10 @@ export class HomeComponent implements OnInit {
 
   updateUsersChecked($event: Array<string>) {
     this.usersCheckedIds = $event
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true)
+    this.destroy$.complete()
   }
 }

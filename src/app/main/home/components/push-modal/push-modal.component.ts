@@ -1,16 +1,17 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {SendNotificationsService} from "../../../../shared/services/main/send-notifications.service";
 import {AlertService} from "../../../../components/alert/alert.service";
 import {Store} from "@ngrx/store";
 import {tokenSelector} from "../../../../reducers/token";
+import {Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-push-modal',
   templateUrl: './push-modal.component.html',
   styleUrls: ['./push-modal.component.scss']
 })
-export class PushModalComponent  {
+export class PushModalComponent implements OnInit, OnDestroy{
   @Output() onClose:EventEmitter<void> = new EventEmitter<void>()
   pushForm!: FormGroup
   submittinAForm!: boolean
@@ -21,6 +22,7 @@ export class PushModalComponent  {
   }
 
   token$ = this.store.select(tokenSelector)
+  destroy$ = new Subject()
 
   ngOnInit(): void {
     this.submittinAForm = false
@@ -37,7 +39,9 @@ export class PushModalComponent  {
   submitPushMessage(){
     this.submittinAForm = true
     if(!this.pushForm.invalid){
-      this.sendNotifications.sendPush(this.token, this.pushForm.value).subscribe({
+      this.sendNotifications.sendPush(this.token, this.pushForm.value).pipe(
+        takeUntil(this.destroy$)
+      ).subscribe({
         next: () => {
           this.alertService.success('Уведомление успешно отправлено')
           this.onClose.emit()
@@ -61,5 +65,10 @@ export class PushModalComponent  {
 
   cancel() {
     this.onClose.emit()
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true)
+    this.destroy$.complete()
   }
 }

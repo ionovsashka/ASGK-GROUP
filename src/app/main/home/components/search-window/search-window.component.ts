@@ -18,14 +18,6 @@ export class SearchWindowComponent {
 
   @Output() setSearch: EventEmitter<ParamsRequest> = new EventEmitter<ParamsRequest>()
 
-  @HostListener('window:beforeunload')
-  setFieldsAndParamsInLocal(){
-    if(this.fields.length !== 0){
-      this.convertingAnArrayOfFields()
-    }
-    this.setSearchString()
-    localStorage.setItem('params', JSON.stringify(this.params))
-  }
   params!: ParamsRequest
   fields!: Array<ActiveField>
 
@@ -41,7 +33,6 @@ export class SearchWindowComponent {
         this.fields.push(JSON.parse(field))
       }
     }
-    localStorage.removeItem('fields')
   }
 
   viewFilter() {
@@ -55,8 +46,10 @@ export class SearchWindowComponent {
       if(this.fields.find(elem => elem.id === response.id)){
         const index = this.fields.findIndex(elem => elem.id === response.id)
         this.fields.splice(index, 1)
+        this.convertingAnArrayOfFields()
       } else{
         this.fields.push(response)
+        this.convertingAnArrayOfFields()
       }
     })
   }
@@ -71,12 +64,6 @@ export class SearchWindowComponent {
 
   hideFilter(){
     this.filterDir.filterWindowContainer.clear()
-  }
-
-  ngOnDestroy() {
-    if(this.fields.length !== 0){
-      this.convertingAnArrayOfFields()
-    }
   }
 
   setSearchString(){
@@ -94,7 +81,12 @@ export class SearchWindowComponent {
   }
 
   resetFields() {
+    if(this.fields.length === 0){
+      return
+    }
     this.fields = []
+    this.submit()
+    localStorage.removeItem('fields')
   }
 
   logout() {
@@ -102,4 +94,5 @@ export class SearchWindowComponent {
     this.store.dispatch(clearToken())
     return this.router.navigate(['auth/login'])
   }
+
 }

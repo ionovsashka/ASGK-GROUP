@@ -12,16 +12,16 @@
     </div>
     <div *ngFor="let field of fields" class="search-window__field">
       <div class="search-window__label">{{field.placeholder}}</div>
-      <input *ngIf="field.id !== 'gender'; else gender" [(ngModel)]="field.value" class="search-window__input" type="text">
+      <input (input)="convertingAnArrayOfFields()" *ngIf="field.id !== 'gender'; else gender" [(ngModel)]="field.value" class="search-window__input" type="text">
       <ng-template #gender>
         <div class="search-window__gender">
           <label>
-            <input [(ngModel)]="field.value" [value]="'м'" class="radio" name="Gender" type="radio">
+            <input (change)="convertingAnArrayOfFields()" [(ngModel)]="field.value" [value]="'м'" class="radio" name="Gender" type="radio">
             <span class="fake__radio"></span>
             <span class="text">Муж</span>
           </label>
           <label>
-            <input [(ngModel)]="field.value" [value]="'ж'" class="radio" name="Gender" type="radio">
+            <input (change)="convertingAnArrayOfFields()" [(ngModel)]="field.value" [value]="'ж'" class="radio" name="Gender" type="radio">
             <span class="fake__radio"></span>
             <span class="text">Жен</span>
           </label>
