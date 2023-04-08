@@ -83,7 +83,10 @@ input[type="number"]::-webkit-inner-spin-button {
 .footer {
   &__buttons-for-param{
     display: flex;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+    @media (max-width: 400px) {
+      flex-direction: column;
+    }
   }
   &__confirm {
     flex: 0 1 100%;

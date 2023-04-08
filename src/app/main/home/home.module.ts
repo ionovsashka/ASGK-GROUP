@@ -8,13 +8,17 @@ import {HomeTableModule} from "./components/home-table/home-table.module";
 import {PushModalModule} from "./components/push-modal/push-modal.module";
 import {SearchWindowModule} from "./components/search-window/search-window.module";
 import {PushModalDirModule} from "../../shared/modules/push-modal-dir.module";
+import {RouterModule, Routes} from "@angular/router";
 
-
+const routes: Routes = [
+  {path: '', component: HomeComponent}
+];
 
 @NgModule({
   declarations: [HomeComponent],
   imports: [
     CommonModule,
+    RouterModule.forChild(routes),
     FilterWindowModule,
     HomeFooterModule,
     HomeHeaderModule,
